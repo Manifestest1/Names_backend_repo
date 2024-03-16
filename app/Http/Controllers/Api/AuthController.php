@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\JobPost;
 use Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
@@ -32,44 +31,8 @@ class AuthController extends Controller
     {
         try
         {
-            $is_user = User::where('email', $request->email)->first();
-            if (!$is_user) 
-            {
-                $save_user = User::updateOrCreate(
-                    [
-                        'google_id' => $request->google_id
-                    ],
-                    [
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'password' => Hash::make($request->password),
-                        'imageurl' => $request->imageurl,
-                    ]
-                );
-                $save_user = User::where('email', $request->email)->first();
-                $user = Auth::user();
-                $credentials = $request->only('email','password');
-
-                if (!$token = JWTAuth::attempt($credentials)) 
-                {
-                    return response()->json([
-                        'status' => 400,
-                        'message' => 'Unauthorized',
-                    ], 401);
-                }
-        
-                return response()->json([
-                    'status' => 'success',
-                    'user' => $user,
-                    'authorisation' => [
-                        'token' => $token,
-                        'type' => 'bearer',
-                    ],
-                ]);
-            } 
-            else 
-            {
-                $credentials = $request->only('email','password');
+           
+            $credentials = $request->only('email','password');
 
                 if (!$token = JWTAuth::attempt($credentials)) 
                 {
@@ -90,7 +53,6 @@ class AuthController extends Controller
                     ],
                 ]);
 
-            }
         } 
         catch (Exception $e) 
         {
@@ -142,55 +104,7 @@ class AuthController extends Controller
     {
         return $this->createNewToken(auth()->refresh());
     }
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function userProfile() 
-    {
-        return response()->json(auth()->user());
-    }
-    public function updateProfile(Request $request) 
-    {
-        $userid = Auth::user()->id;
-        $user = User::find($userid);
-        if($request->imageurl != '' || $request->imageurl != null)
-        {
-            $uploadedFile = $request->file('imageurl');
-            $filename = time() . '_' . $uploadedFile->getClientOriginalName();
-            $destinationPath = public_path() . '/uploads';
-            $uploadedFile->move($destinationPath, $filename);
-            $user->imageurl = asset('uploads/' . $filename);
-        }
-        // return $request->profilePicture;
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->update();
-        return response()->json($user);
-    }
-
-    public function createProfile(Request $request)
-    {
-        $userid = Auth::user()->id;
-        $user = User::find($userid);
-        if($request->role == 'employee')
-        {
-            $user->role_id = 1;
-        }
-        else
-        {
-            $user->role_id = 2;
-        }
-        $user->update();
-        return response()->json($user); 
-    }
-
-    public function publicProfileOfEmployee($id)
-    {
-        $user = User::find($id);
-        return response()->json($user);
-    }
+    
     /**
      * Get the token array structure.
      *
