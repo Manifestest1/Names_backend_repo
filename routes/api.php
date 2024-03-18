@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\Api\AuthController;
+>>>>>>> e8d74322ea7c41147ebc884a9022c91a21000f1e
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) 
+Route::group(['middleware' => 'api'], function ($router) 
 {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']); 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
+<<<<<<< HEAD
      
       
+=======
+>>>>>>> e8d74322ea7c41147ebc884a9022c91a21000f1e
 });

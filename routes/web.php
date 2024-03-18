@@ -20,6 +20,7 @@ Route::get('/', function ()
     return view('welcome');
 });
 
+<<<<<<< HEAD
 
 Route::get('/login/google', function () 
 {
@@ -39,3 +40,5 @@ Route::get('/login/google/callback', function ()
 // Route::get('/showuser',function(){
 //     return view('allusers');
  // });
+=======
+>>>>>>> e8d74322ea7c41147ebc884a9022c91a21000f1e
