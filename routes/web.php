@@ -2,6 +2,7 @@
 
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,10 @@ Route::get('/login/google/callback', function ()
     dd($user);
     // Handle the authenticated user as needed
 });
+
+ Route::get('/showuser',[AdminController::class,'showuser']);
+
+ Route::get('/search_data',[AdminController::class,'search_data']);
+// Route::get('/showuser',function(){
+//     return view('allusers');
+ // });
