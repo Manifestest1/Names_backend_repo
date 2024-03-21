@@ -33,6 +33,8 @@ Route::post('/show_names', [AdminController::class, 'show_names']);
 Route::post('/edit_names/{id}', [AdminController::class, 'edit_names']);
 Route::post('/update_names/{id}', [AdminController::class, 'update_names']);
 Route::get('/delete_names/{id}', [AdminController::class, 'delete_names']);
+Route::get('/links', [AdminController::class, 'index']);
+
 
 Route::post('/add_godnames', [GodController::class, 'add_godnames']);
 Route::get('/show_godnames', [GodController::class, 'show_godnames']);

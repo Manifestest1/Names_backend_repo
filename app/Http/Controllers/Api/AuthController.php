@@ -31,15 +31,7 @@ class AuthController extends Controller
     {
         try
         {
-<<<<<<< HEAD
-            
-                $credentials = $request->only('email','password');
-=======
-           
-            $credentials = $request->only('email','password');
->>>>>>> e8d74322ea7c41147ebc884a9022c91a21000f1e
-
-                if (!$token = JWTAuth::attempt($credentials)) 
+             if (!$token = JWTAuth::attempt($credentials)) 
                 {
                     return response()->json([
                         'status' => 400,
@@ -58,10 +50,6 @@ class AuthController extends Controller
                     ],
                 ]);
 
-<<<<<<< HEAD
-            
-=======
->>>>>>> e8d74322ea7c41147ebc884a9022c91a21000f1e
         } 
         catch (Exception $e) 
         {
@@ -113,11 +101,6 @@ class AuthController extends Controller
     {
         return $this->createNewToken(auth()->refresh());
     }
-<<<<<<< HEAD
-   
-=======
-    
->>>>>>> e8d74322ea7c41147ebc884a9022c91a21000f1e
     /**
      * Get the token array structure.
      *

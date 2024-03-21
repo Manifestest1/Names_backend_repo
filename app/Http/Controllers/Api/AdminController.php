@@ -69,5 +69,12 @@ class AdminController extends Controller
         
         return response()->json(['message' => 'name deleted successfully.']);
     }
-    
+
+   
+     public function index(Request $request)
+        {
+            $perPage = $request->input('per_page', 5); // Default to 10 items per page
+            $items = Name::paginate($perPage);
+            return response()->json($items);
+        }
 }
