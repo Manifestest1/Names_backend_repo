@@ -10,28 +10,29 @@
 <body>
     <div class="container mt-3">
         <div class="card">
-            <div class="card-header">User Name</div>
+            <div class="card-header"> god Names</div>
             <div class="card-body">
                 <center>
-                    <form action="search_data" method="GET">
-                        <div style="float: right; margin: 5px;">
-                            <input type="text" name="search">
-                            <button type="submit" class="btn btn-warning">search</button>
+                    <form action="search" method="GET">
+                        <div >
+                            <input type="text"style=" margin: 5px;" "border-radius:10px;" name="search" class="btn btn-info">
+                            <button style="border-radius: 20px;"type="submit" class="btn btn-outline-success col-lg">search</button>
                         </div>
                     </form>
                 </center>
-                <table class="table table-bordered table-striped  mt-2">
+                <table class="table table-bordered   mt-2">
                     <thead>
                       <tr>
-                        <th> God Name</th>
+                        <th> God Names</th>
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach($data as $id => $show)
+                      @foreach( $data as $showgodnames) 
                         <tr>
-                          <td>{{ $show->name}}</td>
+                            <td>{{ $showgodnames->godname}}</td>
                         </tr>
-                        @endforeach
+
+                      @endforeach
                      </tbody> 
                 </table>    
             </div> 

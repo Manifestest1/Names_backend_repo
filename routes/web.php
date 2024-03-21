@@ -22,7 +22,13 @@ Route::get('/', function ()
 
  Route::get('/showuser',[AdminController::class,'showuser']);
 
+ Route::get('/godnames',[AdminController::class,'god']);
+
  Route::get('/search_data',[AdminController::class,'search_data']);
+
+ Route::get('/godnames',[AdminController::class,'god']);
+
+Route::get('/search',[AdminController::class,'search']);
 // Route::get('/showuser',function(){
 //     return view('allusers');
  // });
