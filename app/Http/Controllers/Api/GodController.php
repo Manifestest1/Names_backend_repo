@@ -69,4 +69,11 @@ class GodController extends Controller
         
         return response()->json(['message' => 'name deleted successfully.']);
     }//
+
+    public function godindex(Request $request)
+    {
+        $perPage = $request->input('per_page', 5); // Default to 10 items per page
+        $items = God::paginate($perPage);
+        return response()->json($items);
+    }
 }
