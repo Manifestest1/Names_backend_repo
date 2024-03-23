@@ -14,6 +14,7 @@ class GodController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
+            'discription' => 'required|string|between:2,100',
         ]);
 
         if ($validator->fails()) {
@@ -23,6 +24,7 @@ class GodController extends Controller
         // Create the Name instance
         $name = God::create([
             'godname' => $request->name,
+            'discription' => $request->discription,
         ]);
 
         return response()->json([
@@ -39,36 +41,56 @@ class GodController extends Controller
 
     public function update_godnames(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|between:2,100',
+            'discription' => 'required|string|between:2,100',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
         $data = God::find($id);
+        if (!$data) {
+            return response()->json(['message' => 'Name not found.'], 404);
+        }
+
         $data->godname = $request->name;
+        $discription->discription = $request->discription;
+        $data->discription = $request->discription;
         $data->save();
 
-        return response()->json(['message' => 'name updated successfully',
-        'data' => $data
-    ], 200);
+        return response()->json([
+            'message' => 'Name updated successfully',
+            'data' => $data
+        ], 200);
     }
 
     public function edit_godnames($id)
     {
         $data = God::find($id);
-        return response()->json(['message' => 'name get successfully',
-        'data' => $data
-    ], 200);
+        if (!$data) {
+            return response()->json(['message' => 'Name not found.'], 404);
+        }
 
+        return response()->json([
+            'message' => 'Name retrieved successfully',
+            'data' => $data
+        ], 200);
     }
 
     public function delete_godnames(Request $request, $id)
     {
         $name = God::find($id);
         
-        if(!$name) {
-            return response()->json(['message' => 'name not found.'], 404);
+        if (!$name) {
+            return response()->json(['message' => 'Name not found.'], 404);
         }
         
         $name->delete();
         
-        return response()->json(['message' => 'name deleted successfully.']);
-    }//
+        return response()->json(['message' => 'Name deleted successfully.']);
+    }
 
     public function godindex(Request $request)
     {

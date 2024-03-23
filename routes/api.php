@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\GodController;
+use App\Http\Controllers\Api\ReligionController;
 
 
 /*
@@ -42,6 +43,14 @@ Route::post('/edit_godnames/{id}', [GodController::class, 'edit_godnames']);
 Route::post('/update_godnames/{id}', [GodController::class, 'update_godnames']);
 Route::get('/delete_godnames/{id}', [GodController::class, 'delete_godnames']);
 Route::get('/godlinks', [GodController::class, 'godindex']);
+
+Route::post('/add_religion', [ReligionController::class, 'add_religion']);
+Route::get('/show_religion', [ReligionController::class, 'show_religion']);
+Route::post('/edit_religion/{id}', [ReligionController::class, 'edit_religion']);
+Route::post('/update_religion/{id}', [ReligionController::class, 'update_religion']);
+Route::get('/delete_religion/{id}', [ReligionController::class, 'delete_religion']);
+Route::get('/religionindex', [ReligionController::class, 'index']);
+
 
 // Route::post('/edit_godnames', function()
 // {

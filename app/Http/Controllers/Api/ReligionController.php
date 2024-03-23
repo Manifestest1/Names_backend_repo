@@ -11,7 +11,22 @@ class ReligionController extends Controller
 {
     public function add_religion(Request $request) 
     {
+        $validator = Validator::make($request->all(), [
+            'religion' => 'required|string|between:2,100',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        // Create the Name instance
+        $name = Religion::create([
+            'religion' => $request->religion,
+        ]);
+        return response()->json([
+            'message' => 'religion successfully added',
+            'religion' => $request->religion
+        ], 201);
         $validator = Validator::make($request->all(), [
             'religion' => 'required|string|between:2,100',
         ]);
@@ -26,7 +41,7 @@ class ReligionController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Name successfully added',
+            'message' => 'religion successfully added',
             'religion' => $religion
         ], 201);
     }
@@ -90,7 +105,7 @@ class ReligionController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('per_page', 5); // Default to 10 items per page
-        $items = God::paginate($perPage);
+        $items = Religion::paginate($perPage);
         return response()->json($items);
     }
 }
