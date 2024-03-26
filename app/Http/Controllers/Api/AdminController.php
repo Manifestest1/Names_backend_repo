@@ -26,6 +26,7 @@ class AdminController extends Controller
         $name = Name::create([
             'name' => $request->name,
             'description' => $request->description,
+            'religion' => $request->religion,
         ]);
 
         return response()->json([
@@ -48,7 +49,8 @@ class AdminController extends Controller
     }
     
     $data->name = $request->name;
-    $data->description = $request->description; // corrected attribute name
+    $data->description = $request->description;
+    $data->religion = $request->religion; // corrected attribute name
     $data->save();
 
     return response()->json([

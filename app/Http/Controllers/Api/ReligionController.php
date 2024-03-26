@@ -9,6 +9,14 @@ use Validator;
 
 class ReligionController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $perPage = $request->input('per_page', 5); // Default to 10 items per page
+        $items = Religion::paginate($perPage);
+        return response()->json($items);
+    }
+
     public function add_religion(Request $request) 
     {
         $validator = Validator::make($request->all(), [
@@ -48,7 +56,7 @@ class ReligionController extends Controller
 
     public function show_religion()
     {
-        $names = Religion::all();
+        $religion = Religion::all();
         return response()->json($religion);
     }
 
@@ -102,10 +110,5 @@ class ReligionController extends Controller
         return response()->json(['message' => 'religion deleted successfully.']);
     }
 
-    public function index(Request $request)
-    {
-        $perPage = $request->input('per_page', 5); // Default to 10 items per page
-        $items = Religion::paginate($perPage);
-        return response()->json($items);
-    }
+  
 }

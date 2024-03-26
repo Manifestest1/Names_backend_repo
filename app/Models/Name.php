@@ -10,7 +10,7 @@ class Name extends Model
     use HasFactory;
 
      protected $fillable = [
-        'name','description',
+        'name','description','religion',
     ];
 
 }
