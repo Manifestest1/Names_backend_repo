@@ -3,6 +3,7 @@
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::get('/', function ()
     return view('welcome');
 });
 
- Route::get('/showuser',[AdminController::class,'showuser']);
+ Route::get('/showuser/{letter?}',[AdminController::class,'showuser'])->name('users.index');
 
  Route::get('/godnames',[AdminController::class,'god']);
 
@@ -29,6 +30,9 @@ Route::get('/', function ()
  Route::get('/godnames',[AdminController::class,'god']);
 
 Route::get('/search',[AdminController::class,'search']);
+
+
+//Route::get('/users/{letter?}', [AdminController::class,'sortuser'])->name('users.index');
 // Route::get('/showuser',function(){
 //     return view('allusers');
  // });
