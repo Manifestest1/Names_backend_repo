@@ -21,4 +21,15 @@ class AdminController extends Controller
         return view('allusers',compact('data'));
     }
 
+    public function god()
+    {
+       $show = DB::table('gods')->get();
+        return view('God',['data'=>$show]);
+    }
+
+    public function search_godnames(Request $request){
+        $search = $request->input('search');
+        $data = DB::table('gods')->where('name','like','%'.$search.'%')->get();
+        return view('God',compact('data'));
+    }
 }
