@@ -84,10 +84,13 @@ public function delete_names(Request $request, $id)
 }
 
    
-     public function index(Request $request)
-        {
-            $perPage = $request->input('per_page', 5); // Default to 10 items per page
-            $items = Name::paginate($perPage);
-            return response()->json($items);
-        }
+public function index(Request $request)
+{
+    $perPage = $request->input('per_page', 5);
+    $items = Name::join('religions', 'names.religion_id', '=', 'religions.id')
+        ->select('names.id','names.name','names.description','religions.religion')
+        ->paginate($perPage);
+    
+    return response()->json($items);
+}
 }
