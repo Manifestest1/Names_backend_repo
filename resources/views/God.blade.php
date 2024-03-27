@@ -15,7 +15,7 @@
                 <center>
                     <form action="search" method="GET">
                         <div >
-                            <input type="text"style=" margin: 5px;" "border-radius:10px;" name="search" class="btn btn-info">
+                            <input type="text"style=" margin: 5px;" border-radius:10px; name="search" class="btn btn-info">
                             <button style="border-radius: 20px;"type="submit" class="btn btn-outline-success col-lg">search</button>
                         </div>
                     </form>
