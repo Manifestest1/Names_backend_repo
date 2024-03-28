@@ -16,11 +16,19 @@
             <div class="card-body">
                 <center>
                     <div>
-                        <select class ="select" id="religion_id" class=" btn btn-info" onchange="religionsChange()" value ="select Religion">
+                        <select class="form-control" id="religion_id" class=" btn btn-info" onchange="religionsChange()">
                             <option>Please select Religion</option>
                             @foreach($religiondata as $religion)
                             <option value="{{$religion->id}}" <?php if(Request::get('religion_id')==$religion->id){ echo 'selected';}  ?> >{{$religion->religion}}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <select id="gender" class="form-control" onchange="genderChange()">
+                            <option>Please select gender</option>
+                            <option <?php if(Request::get('gender')=='male'){ echo 'selected';}  ?> value="male">Male</option>
+                            <option <?php if(Request::get('gender')=='female'){ echo 'selected';}  ?> value="female">Female</option>
+                            <option <?php if(Request::get('unisex')=='unisex'){ echo 'selected';}  ?> value="unisex">Unisex</option>
                         </select>
                     </div>
                     <form action="showuser" method="GET">
@@ -67,25 +75,63 @@
         var url = "{{url('')}}";
         window.location.href = url+'/showuser?religion_id='+religion;
     }
-    function getUrlParameter(name) {
+    function getUrlParameterReligion(name) 
+    {
         var searchParams = new URLSearchParams(window.location.search);
         return searchParams.get(name);
     }
+
+     function getUrlParameterGender(name) 
+    {
+        var searchParams = new URLSearchParams(window.location.search);
+        return searchParams.get(name);
+    }
+
+     function genderChange() 
+    {
+        var gender = $("#gender").val();
+        var religion_id = getUrlParameterReligion('religion_id');
+        if (religion_id) 
+        {
+            var current_url = window.location.href;
+            window.location.href = current_url+'&gender='+gender;
+        }
+        else
+        {
+            var current_url = window.location.href;
+            window.location.href = current_url+'?&gender='+gender;
+        }
+    }
+
     function searchByAlphbetical(letter)
     {
-        var religion_id = getUrlParameter('religion_id');
+        var religion_id = getUrlParameterReligion('religion_id');
+        var gender_id = getUrlParameterGender('gender');
         if (religion_id) 
         {
             var current_url = window.location.href;
             window.location.href = current_url+'&letter_alph='+letter;
         }
-        else
+        else if(!religion_id)
+        {
+            var current_url = window.location.href;
+            window.location.href = current_url+'?&letter_alph='+letter;
+        }
+        if (gender_id) 
+        {
+            var current_url = window.location.href;
+            window.location.href = current_url+'&letter_alph='+letter;
+        }
+        else if(!gender_id)
         {
             var current_url = window.location.href;
             window.location.href = current_url+'?&letter_alph='+letter;
         }
         
         console.log(religion_id,"letter");
+        
     }
+
+   
 </script>
 </html>

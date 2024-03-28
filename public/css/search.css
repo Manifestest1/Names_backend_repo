@@ -22,3 +22,10 @@
 	float: right;
 	margin: 5px;
 }
+#gender{
+	margin-top: 5px;
+}
+/*git status
+git add .
+git commit -m 'changes'
+git push -f origin master*/

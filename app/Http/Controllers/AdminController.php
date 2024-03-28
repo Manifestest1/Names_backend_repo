@@ -11,9 +11,6 @@ class AdminController extends Controller
 {
        public function showuser(Request $request, $letter = null)
     {
-        //   $religion_id = $request->input('religion_id');
-        // $letter_alph = $request->input('letter_alph');
-        
 
         $religiondata = DB::table('religions')->get();
         
@@ -31,9 +28,26 @@ class AdminController extends Controller
            $user->where('religion_id', $request->religion_id);
         }
 
+        if($request->gender)
+        {
+           $user->where('gender', $request->gender);
+        }
+
+         if (($request->religion_id) && ($request->gender)) 
+        {   
+            $user->where('gender', $request->gender)->where('religion_id', $request->religion_id);
+            // $getletter = $request->letter_alph;
+        }
+
         if (($request->religion_id) && ($request->letter_alph)) 
         {   
             $user->where('name', 'LIKE', $request->letter_alph . '%')->where('religion_id', $request->religion_id);
+            $getletter = $request->letter_alph;
+        }
+
+         if (($request->gender) && ($request->letter_alph)) 
+        {   
+            $user->where('name', 'LIKE', $request->letter_alph . '%')->where('gender', $request->gender);
             $getletter = $request->letter_alph;
         }
 
