@@ -27,6 +27,7 @@ class AdminController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'religion_id' => $request->religion,
+            'gender' => $request->gender,
         ]);
 
         return response()->json([
@@ -50,7 +51,8 @@ class AdminController extends Controller
     
     $data->name = $request->name;
     $data->description = $request->description;
-    $data->religion_id = $request->religion; // corrected attribute name
+    $data->religion_id = $request->religion; 
+    $data->gender = $request->gender;// corrected attribute name
     $data->save();
 
     return response()->json([
@@ -88,7 +90,7 @@ public function index(Request $request)
 {
     $perPage = $request->input('per_page', 5);
     $items = Name::join('religions', 'names.religion_id', '=', 'religions.id')
-        ->select('names.id','names.name','names.description','religions.religion')
+        ->select('names.id','names.name','names.description','religions.religion','names.gender')
         ->paginate($perPage);
     
     return response()->json($items);
