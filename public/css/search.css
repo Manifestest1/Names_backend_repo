@@ -1,10 +1,10 @@
 .searchletter{
 	float: left;
 	margin: 5px;
-	font-size: 18px;
+	font-size: 20px;
 	cursor: pointer;
 }
-.search{
+.search{ 
 	text-decoration: none;
 	padding: 5px,10px,5px,10px;
 	background: var(--bs-card-cap-bg);

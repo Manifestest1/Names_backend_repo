@@ -32,8 +32,3 @@ Route::get('/', function ()
 Route::get('/search',[AdminController::class,'search']);
 
 
-//Route::get('/users/{letter?}', [AdminController::class,'sortuser'])->name('users.index');
-// Route::get('/showuser',function(){
-//     return view('allusers');
- // });
-

@@ -9,22 +9,40 @@ use DB;
 
 class AdminController extends Controller
 {
-       public function showuser($letter = null)
+       public function showuser(Request $request, $letter = null)
     {
-         $religiondata = DB::table('religions')->get();
-         //dd($religiondata);
+        //   $religion_id = $request->input('religion_id');
+        // $letter_alph = $request->input('letter_alph');
+        
 
+        $religiondata = DB::table('religions')->get();
+        
         $user= DB::table('names')->orderBy('name');
         $getletter = null;
     
-        if ($letter) 
+        if ($request->letter_alph) 
+        {   
+            $user->where('name', 'LIKE', $request->letter_alph . '%');
+            $getletter = $request->letter_alph;
+        }
+
+        if($request->religion_id)
         {
-            $user->where('name', 'LIKE', $letter . '%');
-            $getletter = $letter;
+           $user->where('religion_id', $request->religion_id);
+        }
+
+        if (($request->religion_id) && ($request->letter_alph)) 
+        {   
+            $user->where('name', 'LIKE', $request->letter_alph . '%')->where('religion_id', $request->religion_id);
+            $getletter = $request->letter_alph;
+        }
+
+        if($request->search)
+        {
+           $user->where('name', 'LIKE','%'. $request->search . '%');
         }
         
         $show =$user->paginate(5);
-
         return view('allusers', ['data' => $show,'searchletter'=>$getletter,'religiondata'=>$religiondata]);
     }
 
@@ -47,10 +65,6 @@ class AdminController extends Controller
         return view('God',compact('data'));
     }
 
-    public function religion()
-    {
-       $show = DB::table('religions')->get();
-        return view('allusers',['data'=>$show]);
-    }
+    
 
 }
