@@ -43,7 +43,7 @@ class GodController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
-            'description' => 'required|string|between:2,100',
+            //'description' => 'required|string|between:2,100',
         ]);
 
         if ($validator->fails()) {
@@ -56,7 +56,7 @@ class GodController extends Controller
         }
 
         $data->godname = $request->name;
-        $description->description = $request->description;
+        //$description->description = $request->description;
         $data->save();
 
         return response()->json([
