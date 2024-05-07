@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models; 
+namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable; 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -20,11 +20,7 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
-<<<<<<< HEAD
         'password',
-=======
-        'password'
->>>>>>> e8d74322ea7c41147ebc884a9022c91a21000f1e
     ];
 
     /**
@@ -44,20 +40,21 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password' => 'string',
     ];
 
-    public function getJWTIdentifier() 
+    public function getJWTIdentifier()
     {
-        return $this->getKey(); 
+        return $this->getKey();
     }
+
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *
      * @return array
      */
-    public function getJWTCustomClaims() 
+    public function getJWTCustomClaims()
     {
         return [];
-    }   
+    }
 }

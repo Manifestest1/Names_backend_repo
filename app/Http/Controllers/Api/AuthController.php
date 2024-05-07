@@ -28,36 +28,62 @@ class AuthController extends Controller
      */
     
      public function login(Request $request)
-     {
-         try {
-             // Extract credentials from the request
-             $credentials = $request->only('email', 'password');
-     
-             // Attempt to authenticate the user
-             if (!Auth::attempt($credentials)) {
-                 return response()->json([
-                     'status' => 'error',
-                     'message' => 'Unauthorized',
-                 ], 401);
-             }
-     
-             // If authentication is successful, get the authenticated user
-             $user = Auth::user();
-     
-             // Return the response with user information
-             return response()->json([
-                 'status' => 'success',
-                 'user' => $user,
-             ]);
-     
-         } catch (Exception $e) {
-             // If an exception occurs, return the error message
-             return response()->json([
-                 'status' => 'error',
-                 'message' => $e->getMessage(),
-             ], 500); // Internal Server Error
-         }
-     }
+{
+    // Validation rules
+    $rules = [
+        'email' => 'required|email',
+        'password' => 'required',
+    ];
+
+    // Validation messages
+    $messages = [
+        'email.required' => 'Email is required.',
+        'email.email' => 'Email must be a valid email address.',
+        'password.required' => 'Password is required.',
+    ];
+
+    // Validate the request data
+    $validator = Validator::make($request->all(), $rules, $messages);
+
+    // Check if the validation fails
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $validator->errors()->first(),
+        ], 422); // Unprocessable Entity
+    }
+
+    try
+        {
+           
+            $credentials = $request->only('email','password');
+
+                if (!$token = JWTAuth::attempt($credentials)) 
+                {
+                    return response()->json([
+                        'status' => 400,
+                        'message' => 'Unauthorized',
+                    ], 401);
+                }
+        
+                $user = Auth::user();
+        
+                return response()->json([
+                    'status' => 'success',
+                    'user' => $user,
+                    'authorisation' => [
+                        'token' => $token,
+                        'type' => 'bearer',
+                    ],
+                ]);
+
+        } 
+        catch (Exception $e) 
+        {
+            return $e->getMessage();
+        }
+}
+
     /**
      * Register a User.
      *
@@ -91,6 +117,7 @@ class AuthController extends Controller
      */
     public function logout() 
     {
+
         auth()->logout();
         return response()->json(['message' => 'User successfully signed out']);
     }
