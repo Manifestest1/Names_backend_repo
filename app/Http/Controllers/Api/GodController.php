@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\God; // Import the Name model
+use App\Models\God;
+use App\Models\Subgodname;
+ // Import the Name model
 use Validator;
 
 class GodController extends Controller
@@ -14,7 +16,7 @@ class GodController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
-            'discription' => 'required|string|between:2,100',
+            //'description' => 'required|string|between:2,100',
         ]);
 
         if ($validator->fails()) {
@@ -24,7 +26,7 @@ class GodController extends Controller
         // Create the Name instance
         $name = God::create([
             'godname' => $request->name,
-            'discription' => $request->discription,
+           // 'description' => $request->description,
         ]);
 
         return response()->json([
@@ -43,7 +45,6 @@ class GodController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
-            'discription' => 'required|string|between:2,100',
         ]);
 
         if ($validator->fails()) {
@@ -56,8 +57,7 @@ class GodController extends Controller
         }
 
         $data->godname = $request->name;
-        $discription->discription = $request->discription;
-        $data->discription = $request->discription;
+        //$description->description = $request->description;
         $data->save();
 
         return response()->json([
@@ -98,4 +98,29 @@ class GodController extends Controller
         $items = God::paginate($perPage);
         return response()->json($items);
     }
+
+    public function add_subgod_names(Request $request) 
+     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|between:2,100',
+        ]);
+        $existingSubgodname = Subgodname::where('subgodname', $request->name)->first();
+        if ($existingSubgodname) {
+            return response()->json([
+                'message' => ' subgodname already exists.',
+            ], 409); 
+        }
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $subgodname = Subgodname::create([
+            'subgodname' => $request->name,
+        ]);
+
+        return response()->json([
+            'message' => 'subgodname  added',
+            'name' => $subgodname
+        ], 201);
+    }
+    
 }

@@ -44,6 +44,9 @@ Route::post('/update_godnames/{id}', [GodController::class, 'update_godnames']);
 Route::get('/delete_godnames/{id}', [GodController::class, 'delete_godnames']);
 Route::get('/godlinks', [GodController::class, 'godindex']);
 
+Route::post('/add_subgodname', [GodController::class, 'add_subgod_names']);
+
+
 Route::post('/add_religion', [ReligionController::class, 'add_religion']);
 Route::get('/show_religion', [ReligionController::class, 'show_religion']);
 Route::post('/edit_religion/{id}', [ReligionController::class, 'edit_religion']);
