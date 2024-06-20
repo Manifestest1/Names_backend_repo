@@ -17,6 +17,12 @@ class GodController extends Controller
             'name' => 'required|string|between:2,100',
             //'description' => 'required|string|between:2,100',
         ]);
+        $existingodname = God::where('godname', $request->name)->first();
+        if ($existingodname) {
+            return response()->json([
+                'message' => ' godname already exists.',
+            ], 409); 
+        }
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
@@ -121,5 +127,27 @@ class GodController extends Controller
             'message' => 'subgodname added',
             'name' => $subgodname
         ], 201);
+    }
+
+    public function show_subgodnames()
+    {
+        $names = Subgodname::all();
+       
+        if ($names->isEmpty()) {
+            return response()->json([
+                'message' => 'No subgod names found.',
+                'data' => []
+            ], 200); 
+        }
+        return response()->json([
+            'message' => 'Subgodnames retrieved successfully.',
+            'data' => $names
+        ], 200); 
+    }
+    public function subgodindex(Request $request)
+    {
+        $perPage = $request->input('per_page', 5); // Default to 10 items per page
+        $items = Subgodname::paginate($perPage);
+        return response()->json($items);
     }
 }
