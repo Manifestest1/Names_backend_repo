@@ -143,5 +143,11 @@ class GodController extends Controller
             'data' => $names
         ], 200); 
     }
+    public function subgodindex(Request $request)
+    {
+        $perPage = $request->input('per_page', 5); // Default to 10 items per page
+        $items = Subgodname::paginate($perPage);
+        return response()->json($items);
+    }
     
 }
