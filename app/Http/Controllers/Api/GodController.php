@@ -146,7 +146,7 @@ class GodController extends Controller
     }
     public function subgodindex(Request $request)
     {
-        $perPage = $request->input('per_page', 5); // Default to 10 items per page
+        $perPage = $request->input('per_page', 15); // Default to 10 items per page
         $items = Subgodname::paginate($perPage);
         return response()->json($items);
     }
