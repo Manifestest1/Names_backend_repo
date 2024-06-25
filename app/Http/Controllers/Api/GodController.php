@@ -106,29 +106,42 @@ class GodController extends Controller
     }
 
     public function add_subgod_names(Request $request) 
-     {
+    {
+        
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
+            'god_id' => 'required|exists:gods,id'
         ]);
-        $existingSubgodname = Subgodname::where('subgodname', $request->name)->first();
-        if ($existingSubgodname) {
-            return response()->json([
-                'message' => ' subgodname already exists.',
-            ], 409); 
-        }
+    
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        $subgodname = Subgodname::create([
+    
+        $existingSubgodname = Subgodname::where('subgodname', $request->name)->first();
+        if ($existingSubgodname) {
+            return response()->json([
+                'message' => 'Subgodname already exists.',
+            ], 409); 
+        }
+    
+        
+        $god = God::find($request->god_id);
+        if (!$god) {
+            return response()->json([
+                'message' => 'God not found.',
+            ], 404);
+        }
+    
+        $subgodname = $god->subgodnames()->create([
             'subgodname' => $request->name,
         ]);
-
+    
         return response()->json([
-            'message' => 'subgodname  added',
+            'message' => 'Subgodname added',
             'name' => $subgodname
         ], 201);
     }
-    public function show_subgodnames()
+        public function show_subgodnames()
     {
         $names = Subgodname::all();
        
@@ -145,7 +158,7 @@ class GodController extends Controller
     }
     public function subgodindex(Request $request)
     {
-        $perPage = $request->input('per_page', 5); // Default to 10 items per page
+        $perPage = $request->input('per_page', 5); 
         $items = Subgodname::paginate($perPage);
         return response()->json($items);
     }
