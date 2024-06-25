@@ -108,7 +108,6 @@ class GodController extends Controller
     public function add_subgod_names(Request $request) 
     {
         
->>>>>>> 183af908bcf2a08f952837f4ab293fe948691aee
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
             'god_id' => 'required|exists:gods,id'
@@ -138,20 +137,19 @@ class GodController extends Controller
         ]);
     
         return response()->json([
-<<<<<<< HEAD
+
             'message' => 'subgodname added',
             'name' => $subgodname
         ], 201);
     }
 
     public function show_subgodnames()
-=======
+
             'message' => 'Subgodname added',
             'name' => $subgodname
         ], 201);
     }
         public function show_subgodnames()
->>>>>>> 183af908bcf2a08f952837f4ab293fe948691aee
     {
         $names = Subgodname::all();
        
@@ -168,11 +166,8 @@ class GodController extends Controller
     }
     public function subgodindex(Request $request)
     {
-<<<<<<< HEAD
         $perPage = $request->input('per_page', 15); // Default to 10 items per page
-=======
         $perPage = $request->input('per_page', 5); 
->>>>>>> 183af908bcf2a08f952837f4ab293fe948691aee
         $items = Subgodname::paginate($perPage);
         return response()->json($items);
     }
