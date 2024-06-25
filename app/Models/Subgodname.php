@@ -11,4 +11,8 @@ class Subgodname extends Model
     protected $fillable = [
         'subgodname', 
     ];
+    public function god()
+    {
+        return $this->belongsTo(God::class);
+    }
 }

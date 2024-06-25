@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('subgodnames', function (Blueprint $table) {
             $table->id();
             $table->string('subgodname');
+            $table->unsignedBigInteger('god_id');
+            $table->foreign('god_id')->references('id')->on('gods')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -10,5 +10,10 @@ class God extends Model
     use HasFactory;
     protected $fillable = [
         'godname', 'description',
+    
     ];
+    public function subgodnames()
+    {
+        return $this->hasMany(Subgodname::class);
+    }
 }
