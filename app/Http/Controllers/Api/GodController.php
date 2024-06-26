@@ -135,13 +135,12 @@ class GodController extends Controller
         $subgodname = $god->subgodnames()->create([
             'subgodname' => $request->name,
         ]);
-    
         return response()->json([
             'message' => 'Subgodname added',
             'name' => $subgodname
         ], 201);
     }
-        public function show_subgodnames()
+    public function show_subgodnames()
     {
         $names = Subgodname::all();
        
@@ -156,11 +155,13 @@ class GodController extends Controller
             'data' => $names
         ], 200); 
     }
-    public function subgodindex(Request $request)
+    public function subgodindex(Request $request,$god_id)
     {
         $perPage = $request->input('per_page', 5); 
-        $items = Subgodname::paginate($perPage);
+        $query = Subgodname::where('god_id', $god_id); 
+        $items = $query->paginate($perPage);
         return response()->json($items);
     }
+   
     
 }
