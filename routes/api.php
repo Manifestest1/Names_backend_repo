@@ -60,4 +60,4 @@ Route::post('/add_nickname',[NicknameController::class,'add_nicknames']);
 Route::post('/edit_nicknames/{id}', [NicknameController::class, 'edit_nicknames']);
 Route::post('/update_nicknames/{id}', [NicknameController::class, 'update_nicknames']);
 Route::get('/delete_nickname/{id}', [NicknameController::class, 'delete_nicknames']);
-Route::get('/nickname_index/{id}', [NicknameController::class, 'nicknameindex']);
+Route::get('/nickname_index', [NicknameController::class, 'nicknameindex']);
