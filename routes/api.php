@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\GodController;
 use App\Http\Controllers\Api\ReligionController;
+use App\Http\Controllers\Api\NicknameController;
 
 
 /*
@@ -45,8 +46,8 @@ Route::get('/delete_godnames/{id}', [GodController::class, 'delete_godnames']);
 Route::get('/godlinks', [GodController::class, 'godindex']);
 
 Route::post('/add_subgodname', [GodController::class, 'add_subgod_names']);
-Route::get('/show_subgodnames', [GodController::class, 'show_subgodnames']);
-Route::get('/subgodindex', [GodController::class, 'subgodindex']);
+Route::get('/show_subgodnames/', [GodController::class, 'show_subgodnames']);
+Route::get('/subgodindex/{id}', [GodController::class, 'subgodindex']);
 
 Route::post('/add_religion', [ReligionController::class, 'add_religion']);
 Route::get('/show_religion', [ReligionController::class, 'show_religion']);
@@ -55,12 +56,8 @@ Route::post('/update_religion/{id}', [ReligionController::class, 'update_religio
 Route::get('/delete_religion/{id}', [ReligionController::class, 'delete_religion']);
 Route::get('/religionindex', [ReligionController::class, 'index']);
 
-
-// Route::post('/edit_godnames', function()
-// {
-//     return response()->json([
-//         'message' => 'Name successfully added',
-//         'name' => "Ajay"
-//     ], 201);
-
-// });
+Route::post('/add_nickname',[NicknameController::class,'add_nicknames']);
+Route::post('/edit_nicknames/{id}', [NicknameController::class, 'edit_nicknames']);
+Route::post('/update_nicknames/{id}', [NicknameController::class, 'update_nicknames']);
+Route::get('/delete_nickname/{id}', [NicknameController::class, 'delete_nicknames']);
+Route::get('/nickname_index', [NicknameController::class, 'nicknameindex']);

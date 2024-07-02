@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\God;
 use App\Models\Subgodname;
-// Import the Name model
+ // Import the Name model
 use Validator;
 
 class GodController extends Controller
 {
     public function add_godnames(Request $request) 
     {
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
             //'description' => 'required|string|between:2,100',
@@ -31,7 +32,7 @@ class GodController extends Controller
         // Create the Name instance
         $name = God::create([
             'godname' => $request->name,
-            // 'description' => $request->description,
+           // 'description' => $request->description,
         ]);
 
         return response()->json([
@@ -50,7 +51,6 @@ class GodController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
-            //'description' => 'required|string|between:2,100',
         ]);
 
         if ($validator->fails()) {
@@ -135,21 +135,12 @@ class GodController extends Controller
         $subgodname = $god->subgodnames()->create([
             'subgodname' => $request->name,
         ]);
-    
         return response()->json([
-
-            'message' => 'subgodname added',
-            'name' => $subgodname
-        ], 201);
-    }
-
-    public function show_subgodnames()
-
             'message' => 'Subgodname added',
             'name' => $subgodname
         ], 201);
     }
-        public function show_subgodnames()
+    public function show_subgodnames()
     {
         $names = Subgodname::all();
        
@@ -164,11 +155,13 @@ class GodController extends Controller
             'data' => $names
         ], 200); 
     }
-    public function subgodindex(Request $request)
+    public function subgodindex(Request $request,$god_id)
     {
-        $perPage = $request->input('per_page', 15); // Default to 10 items per page
         $perPage = $request->input('per_page', 5); 
-        $items = Subgodname::paginate($perPage);
+        $query = Subgodname::where('god_id', $god_id); 
+        $items = $query->paginate($perPage);
         return response()->json($items);
     }
+   
+    
 }
