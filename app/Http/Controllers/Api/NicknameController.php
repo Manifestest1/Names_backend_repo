@@ -83,12 +83,11 @@ class NicknameController extends Controller
         if (!$name) {
             return response()->json(['message' => 'Name not found.'], 404);
         }
-        
         $name->delete();
         
         return response()->json(['message' => 'Nickname deleted successfully.']);
     }
-    public function nicknameindex(Request $request )
+    public function nicknameindex(Request $request)
     {
         $perPage = $request->input('per_page', 5); 
         $query = Nickname::query(); 
